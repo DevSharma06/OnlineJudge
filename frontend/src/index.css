@@ -13,6 +13,11 @@ code {
     monospace;
 }
 
+:root {
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+
 header {
   background: #fff;
 }
@@ -28,4 +33,36 @@ header .container {
 header a {
   color: #333;
   text-decoration: none;
+}
+
+/* Problem Details */
+.problem-details {
+  background: #fff;
+  border-radius: 5px;
+  margin: 20px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.problem-item h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+
+.problem-item p {
+  display: block;
+}
+
+.problem-item label.difficulty {
+  border-radius: 20px;
+  border: 2px solid #1aac83;
+  padding: 2px 12px;
+}
+
+.problem-item label.language {
+  border-radius: 20px;
+  border: 2px solid #1aac83;
+  padding: 2px 12px;
 }
