@@ -8,9 +8,9 @@ const testCasesSchema = new Schema({
 });
 
 const problemSchema = new Schema({
-  serial_no: String,
+  serial_no: Number,
   title: String,
-  description: String,
+  description: [String],
   languages: [String],
   difficulty: String,
   test_cases: testCasesSchema,

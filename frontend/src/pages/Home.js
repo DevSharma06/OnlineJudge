@@ -1,4 +1,4 @@
-import ProblemDetails from "../components/ProblemDetails";
+import ProblemDetails from "../components/home/ProblemDetails";
 
 const Home = () => {
   return (

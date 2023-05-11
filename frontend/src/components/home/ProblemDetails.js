@@ -6,13 +6,13 @@ const ProblemDetails = () => {
 
   useEffect(() => {
     const fetchProblems = async () => {
-      const response = await fetch(
-        "/api/problems/getProblems"
-      );
+      const response = await fetch("/api/problems/getProblems");
       const json = await response.json();
 
       if (response.ok) {
         setProblems(json);
+      } else {
+        console.log(response);
       }
     };
 
@@ -21,8 +21,7 @@ const ProblemDetails = () => {
 
   return (
     <div className="problem-details">
-      {problems &&
-        problems.map((p) => <ProblemItem problem={p} key={p._id} />)}
+      {problems && problems.map((p) => <ProblemItem problem={p} key={p._id} />)}
     </div>
   );
 };

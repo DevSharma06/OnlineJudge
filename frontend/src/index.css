@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #303030;
+  background: #282828;
 }
 
 code {
@@ -19,7 +19,7 @@ code {
 }
 
 header {
-  background: #282828;
+  background: #303030;
 }
 
 header .container {
@@ -41,7 +41,7 @@ header a {
 
 /* Problem Details */
 .problem-details {
-  background: #282828;
+  background: #303030;
   border-radius: 5px;
   margin: 20px;
   padding: 20px;
@@ -85,4 +85,58 @@ header a {
 .problem-item div.button {
   display: flex;
   justify-content: flex-end;
+}
+
+/* Problem Description */
+.problem-desc {
+  background: #303030;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.problem-desc h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.problem-desc_description p {
+  font-size: 0.88em;
+}
+
+.sample-input,
+.sample-output {
+  font-weight: bold;
+}
+
+.input,
+.output {
+  background: #282828;
+  margin: 10px 0 10px 0;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.84em;
+}
+
+.input p,
+.output p {
+  margin: 5px;
+}
+
+.problem-desc_button-div {
+  margin: 20px 0 20px 0;
+}
+
+.problem-desc_button {
+  background: var(--primary);
+  border: 0;
+  padding: 10px;
+  color: #fff;
+  border-radius: 5px;
+  width: 120px;
+  font-weight: bold;
+  margin: auto;
+  display: block;
+  cursor: pointer;
 }
