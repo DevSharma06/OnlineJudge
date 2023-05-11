@@ -14,7 +14,9 @@ const ProblemItem = (props) => {
           <label className="language" key={l}>{l}</label>
         ))}
       </p>
+      <div className="button">
       <button>Solve</button>
+      </div>
     </div>
   );
 };

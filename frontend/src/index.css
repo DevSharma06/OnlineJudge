@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #f1f1f1;
+  background: #303030;
 }
 
 code {
@@ -19,7 +19,7 @@ code {
 }
 
 header {
-  background: #fff;
+  background: #282828;
 }
 
 header .container {
@@ -35,9 +35,13 @@ header a {
   text-decoration: none;
 }
 
+.container h2 {
+  color: #fff;
+}
+
 /* Problem Details */
 .problem-details {
-  background: #fff;
+  background: #282828;
   border-radius: 5px;
   margin: 20px;
   padding: 20px;
@@ -53,6 +57,7 @@ header a {
 
 .problem-item p {
   display: block;
+  color: #fff;
 }
 
 .problem-item label.difficulty {
@@ -65,4 +70,19 @@ header a {
   border-radius: 20px;
   border: 2px solid #1aac83;
   padding: 2px 12px;
+}
+
+.problem-item button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  width: 100px;
+  cursor: pointer;
+}
+
+.problem-item div.button {
+  display: flex;
+  justify-content: flex-end;
 }

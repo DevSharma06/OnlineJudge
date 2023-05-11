@@ -11,6 +11,26 @@ const getProblems = async (req, res) => {
   }
 };
 
+const getProblem = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "Problem does not exist" });
+    }
+
+    const problem = await Problem.findById(id);
+    if (!problem) {
+      return res.status(404).json({ error: "Problem does not exist" });
+    }
+
+    return res.status(200).json(problem);
+  } catch (e) {
+    return res.status(500).json({ message: e.message });
+  }
+};
+
 module.exports = {
   getProblems,
+  getProblem,
 };
