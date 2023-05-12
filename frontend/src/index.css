@@ -40,7 +40,7 @@ header a {
 }
 
 /* Problem Details */
-.problem-details {
+.problem-item {
   background: #303030;
   border-radius: 5px;
   margin: 20px;
@@ -88,6 +88,7 @@ header a {
 }
 
 /* Problem Description */
+
 .problem-desc {
   background: #303030;
   margin: 15px;
@@ -102,7 +103,7 @@ header a {
 }
 
 .problem-desc_description p {
-  font-size: 0.88em;
+  font-size: 0.91em;
 }
 
 .sample-input,
@@ -138,5 +139,52 @@ header a {
   font-weight: bold;
   margin: auto;
   display: block;
+  cursor: pointer;
+}
+
+/* Submit */
+.submit-container {
+  background: #303030;
+  border-radius: 5px;
+  margin: 20px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.submit-container label {
+  color: #fff;
+  margin: 0;
+}
+
+.submit-container select {
+  padding: 5px;
+  margin-left: 20px;
+  border-radius: 4px;
+}
+
+.submit-container textarea {
+  background-color: #282828;
+  color: #fff;
+  margin: 10px 10px 10px 0;
+  padding: 5px;
+  width: 100%;
+  height: 50vh;
+  box-sizing: border-box;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.buttons button {
+  background: var(--primary);
+  border: 0;
+  padding: 10px;
+  color: #fff;
+  border-radius: 5px;
+  width: auto;
+  font-weight: bold;
+  margin: 8px;
   cursor: pointer;
 }

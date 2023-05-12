@@ -24,7 +24,7 @@ const ProblemItem = (props) => {
         ))}
       </p>
       <div className="button">
-        <button onClick={handleSolveClick}>Solve</button>
+        <button onClick={handleSolveClick}>Solve Now</button>
       </div>
     </div>
   );

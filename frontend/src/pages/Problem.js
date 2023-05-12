@@ -20,7 +20,11 @@ const Problem = () => {
 
     getProblem();
   }, []);
-  return <div>{problem && <ProblemDescription problem={problem} />}</div>;
+  return (
+    <div className="problem">
+      {problem && <ProblemDescription problem={problem} />}
+    </div>
+  );
 };
 
 export default Problem;
