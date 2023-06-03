@@ -8,7 +8,7 @@ const Problem = () => {
 
   useEffect(() => {
     const getProblem = async () => {
-      const response = await fetch(`/api/problems/getProblemByNo/${value}`);
+      const response = await fetch(`/api/problems/getProblemById/${value}`);
       const json = await response.json();
 
       if (response.ok) {

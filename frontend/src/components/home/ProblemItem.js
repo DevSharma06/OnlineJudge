@@ -5,7 +5,7 @@ const ProblemItem = (props) => {
   const navigate = useNavigate();
 
   const handleSolveClick = () => {
-    navigate(`/problem/${problem.serial_no}`);
+    navigate(`/problem/${problem._id}`);
   };
 
   return (

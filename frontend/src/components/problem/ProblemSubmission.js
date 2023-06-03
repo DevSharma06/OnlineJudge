@@ -1,4 +1,4 @@
-const Submit = (props) => {
+const ProblemSubmission = (props) => {
   const problem = props.problem;
 
   const cancelClickHandler = (e) => {
@@ -37,4 +37,4 @@ const Submit = (props) => {
   );
 };
 
-export default Submit;
+export default ProblemSubmission;

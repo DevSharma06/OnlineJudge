@@ -7,6 +7,7 @@ const problemRoutes = require("./routes/problems");
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //routes

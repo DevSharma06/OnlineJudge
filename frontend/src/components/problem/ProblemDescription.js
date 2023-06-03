@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Submit from "./Submit";
+import ProblemSubmission from "./ProblemSubmission";
 
 const ProblemDescription = (props) => {
   const problem = props.problem;
@@ -15,14 +15,15 @@ const ProblemDescription = (props) => {
   return (
     <div>
       {isSubmitClicked && (
-        <Submit clickHandler={submitClickHandler} problem={problem} />
+        <ProblemSubmission
+          clickHandler={submitClickHandler}
+          problem={problem}
+        />
       )}
       {!isSubmitClicked && (
         <div className="problem-desc">
           <div>
-            <h3>
-              {problem.serial_no}. {problem.title}
-            </h3>
+            <h3>{problem.title}</h3>
             <div className="problem-desc_description">
               {problem.description.map((line) => (
                 <p key={line}>{line}</p>
