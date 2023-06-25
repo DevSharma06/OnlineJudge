@@ -126,13 +126,13 @@ const addTestCase = async (req, res) => {
       error: "Invalid Problem Id or Problem not found",
     });
   }
-  
+
   const filter = {
     problemId: problemId,
-    "test_cases.input": { $ne: input, $ne: output },
+    "test_cases.input": { $ne: input }
   };
   const options = { upsert: true };
-  const updatedSolution = await Solution.updateOne(
+  await Solution.updateOne(
     filter,
     {
       // $push: { test_cases: test_cases },
@@ -143,7 +143,7 @@ const addTestCase = async (req, res) => {
     .then((doc) => {
       return res.status(200).json({
         status: doc,
-        message: "Test Cases inserted successfully",
+        message: "Test Case inserted successfully",
       });
     })
     .catch((err) => {
@@ -151,7 +151,7 @@ const addTestCase = async (req, res) => {
         return res.status(400).json({
           success: false,
           error:
-            "Input or Output already exists. Please enter unique Input or Output",
+            "Input already exists. Please enter unique Input",
         });
       } else {
         return res.status(500).json({ message: err.message });

@@ -216,7 +216,7 @@ header a {
   text-align: center;
 }
 
-.form-container h2 {
+.form-container h2, h3 {
   color: white;
 }
 
@@ -232,6 +232,11 @@ header a {
 
 .problem-form label {
   display: inline-block;
+}
+
+.problem-form_desc {
+  text-align: left;
+  margin: 0;
 }
 
 .problem-form input[type="text"],

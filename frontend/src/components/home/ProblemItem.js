@@ -11,7 +11,7 @@ const ProblemItem = (props) => {
   const handleTestCaseClick = () => {
     navigate(`/problem/addTestCase/${problem._id}`, {
       replace: false,
-      state: problem._id,
+      state: problem,
     });
   };
 

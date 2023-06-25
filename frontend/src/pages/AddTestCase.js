@@ -4,11 +4,11 @@ import { useLocation } from "react-router-dom";
 const AddTestCase = () => {
   const { state } = useLocation();
 
-  const problemId = state;
+  const problem = state;
 
   return (
     <div className="form-container">
-      <TestCaseForm problemId={problemId} />
+      <TestCaseForm problem={problem} />
     </div>
   );
 };

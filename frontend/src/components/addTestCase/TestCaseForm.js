@@ -1,14 +1,78 @@
-const TestCaseForm = (props) => {
-  const problemId = props.problemId;
+import { useRef, useState } from "react";
 
-  const addInputOutputHandler = (e) => {
+const isEmpty = (value) => value.trim() === "";
+
+const TestCaseForm = (props) => {
+  const problem = props.problem;
+
+  const inputRef = useRef();
+  const outputRef = useRef();
+
+  const [formValid, setFormValid] = useState({
+    input: true,
+    output: true,
+  });
+
+  const addInputOutputHandler = async (e) => {
     e.preventDefault();
+
+    const enteredInput = inputRef.current.value;
+    const enteredOutput = outputRef.current.value;
+
+    const enteredInputIsValid = !isEmpty(enteredInput);
+    const enteredOutputIsValid = !isEmpty(enteredOutput);
+
+    setFormValid({
+      input: enteredInputIsValid,
+      output: enteredOutputIsValid,
+    });
+
+    const IsFormValid = enteredInputIsValid && enteredOutputIsValid;
+
+    if (!IsFormValid) {
+      return;
+    }
+
+    const solution = {
+      problemId: problem._id,
+      input: enteredInput,
+      output: enteredOutput,
+    };
+
+    const response = await fetch("/api/problems/addTestCase", {
+      method: "POST",
+      body: JSON.stringify(solution),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      alert(json.error);
+    } else {
+      // alert(json);
+      inputRef.current.value = "";
+      outputRef.current.value = "";
+      alert(json.message);
+    }
   };
 
   return (
     <div className="input-output-container">
-      <h2>Test Cases</h2>
-      <div className="problem-form">
+      <h3>{problem.title}</h3>
+      <div className="problem-form" style={{ margin: 0 }}>
+        <div>
+          <div className="problem-form_desc">
+            {problem.description.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+          </div>
+        </div>
+      </div>
+      <h3>Test Cases</h3>
+      <form className="problem-form">
         <div className="row">
           <div className="col-1">
             <label htmlFor="desc">Input</label>
@@ -19,7 +83,9 @@ const TestCaseForm = (props) => {
               id="desc"
               placeholder="Enter a valid input for the problem"
               rows="3"
+              ref={inputRef}
             />
+            {!formValid.input && <p>Please enter a valid Input</p>}
           </div>
         </div>
 
@@ -33,12 +99,14 @@ const TestCaseForm = (props) => {
               id="desc"
               placeholder="Enter a valid output for the problem"
               rows="3"
+              ref={outputRef}
             />
+            {!formValid.output && <p>Please enter a valid Output</p>}
           </div>
         </div>
 
         <button onClick={addInputOutputHandler}>Add Test case</button>
-      </div>
+      </form>
     </div>
   );
 };
