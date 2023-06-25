@@ -4,6 +4,7 @@ const Solution = require("../model/solutionModel");
 
 const { generateFile } = require("../utility/generateFile");
 const { executeJava } = require("../utility/executeJava");
+const { executeCpp } = require("../utility/executeCpp");
 
 const getProblems = async (req, res) => {
   try {
@@ -129,7 +130,7 @@ const addTestCase = async (req, res) => {
 
   const filter = {
     problemId: problemId,
-    "test_cases.input": { $ne: input }
+    "test_cases.input": { $ne: input },
   };
   const options = { upsert: true };
   await Solution.updateOne(
@@ -150,8 +151,7 @@ const addTestCase = async (req, res) => {
       if (err && err.code === 11000) {
         return res.status(400).json({
           success: false,
-          error:
-            "Input already exists. Please enter unique Input",
+          error: "Input already exists. Please enter unique Input",
         });
       } else {
         return res.status(500).json({ message: err.message });
@@ -175,13 +175,21 @@ const submitProblem = async (req, res) => {
     }
 
     try {
-      const filepath = await generateFile(language, code);
+      if (language === "C++") {
+        const lang = "cpp";
+        const filepath = await generateFile(lang, code);
+        const output = await executeCpp(filepath);
 
-      const output = await executeJava(filepath);
+        return res.status(200).json({ filepath, output });
+      } else if (language === "Java") {
+        const lang = "java";
+        const filepath = await generateFile(lang, code);
+        const output = await executeJava(filepath);
 
-      return res.status(200).json({ filepath, output });
+        return res.status(200).json({ filepath, output });
+      }
     } catch (err) {
-      return res.status(500).json({ err });
+      return res.status(500).json({ error: err });
     }
   } catch (e) {
     return res.status(500).json({ message: e.message });
