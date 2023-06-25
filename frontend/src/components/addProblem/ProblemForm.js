@@ -39,8 +39,8 @@ const ProblemForm = () => {
     const enteredTitleIsValid = !isEmpty(enteredTitle);
     const enteredDescIsValid = isTenChars(enteredDesc);
     const enteredLangIsValid = !isLangSelected(langInfo);
-    const enteredInputIsValid = isTenChars(enteredInput);
-    const enteredOutputIsValid = isTenChars(enteredOutput);
+    const enteredInputIsValid = !isEmpty(enteredInput);
+    const enteredOutputIsValid = !isEmpty(enteredOutput);
 
     setFormInputValidity({
       title: enteredTitleIsValid,
@@ -109,8 +109,8 @@ const ProblemForm = () => {
   };
 
   return (
-    <div className="form-container">
-      <h2>Please enter Problem Details</h2>
+    <div className="problem-container">
+      <h2>Problem Details</h2>
       <div className="problem-form">
         <form>
           <div className="row">

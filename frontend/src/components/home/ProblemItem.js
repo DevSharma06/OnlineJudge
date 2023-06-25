@@ -8,6 +8,13 @@ const ProblemItem = (props) => {
     navigate(`/problem/${problem._id}`);
   };
 
+  const handleTestCaseClick = () => {
+    navigate(`/problem/addTestCase/${problem._id}`, {
+      replace: false,
+      state: problem._id,
+    });
+  };
+
   return (
     <div className="problem-item">
       <h4>{problem.title}</h4>
@@ -24,6 +31,7 @@ const ProblemItem = (props) => {
         ))}
       </p>
       <div className="button">
+        <button onClick={handleTestCaseClick}>Add Test Cases</button>
         <button onClick={handleSolveClick}>Solve Now</button>
       </div>
     </div>

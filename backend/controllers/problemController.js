@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Problem = require("../model/problemModel");
+const Solution = require("../model/solutionModel");
 
 const { generateFile } = require("../utility/generateFile");
 const { executeJava } = require("../utility/executeJava");
@@ -78,7 +79,7 @@ const addProblem = async (req, res) => {
     }
 
     try {
-      const problem = Problem.create({
+      const problem = await Problem.create({
         title,
         description,
         languages,
@@ -96,6 +97,66 @@ const addProblem = async (req, res) => {
   } catch (e) {
     return res.status(500).json({ message: e.message });
   }
+};
+
+const addTestCase = async (req, res) => {
+  const { problemId, input, output } = req.body;
+
+  if (!problemId) {
+    return res
+      .status(400)
+      .json({ success: false, error: "No problem found to add test case" });
+  }
+  if (!input) {
+    return res
+      .status(400)
+      .json({ success: false, error: "Input cannot be empty" });
+  }
+  if (!output) {
+    return res
+      .status(400)
+      .json({ success: false, error: "Output cannot be empty" });
+  }
+
+  const isValidProblem = mongoose.Types.ObjectId.isValid(problemId);
+
+  if (!isValidProblem) {
+    return res.status(400).json({
+      success: false,
+      error: "Invalid Problem Id or Problem not found",
+    });
+  }
+  
+  const filter = {
+    problemId: problemId,
+    "test_cases.input": { $ne: input, $ne: output },
+  };
+  const options = { upsert: true };
+  const updatedSolution = await Solution.updateOne(
+    filter,
+    {
+      // $push: { test_cases: test_cases },
+      $addToSet: { test_cases: { input: input, output: output } },
+    },
+    options
+  )
+    .then((doc) => {
+      return res.status(200).json({
+        status: doc,
+        message: "Test Cases inserted successfully",
+      });
+    })
+    .catch((err) => {
+      if (err && err.code === 11000) {
+        return res.status(400).json({
+          success: false,
+          error:
+            "Input or Output already exists. Please enter unique Input or Output",
+        });
+      } else {
+        return res.status(500).json({ message: err.message });
+      }
+    });
 };
 
 const submitProblem = async (req, res) => {
@@ -133,4 +194,5 @@ module.exports = {
   getProblemByNo,
   submitProblem,
   addProblem,
+  addTestCase,
 };

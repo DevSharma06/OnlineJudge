@@ -2,7 +2,7 @@ import ProblemForm from "../components/addProblem/ProblemForm";
 
 const AddProblem = () => {
   return (
-    <div>
+    <div className="form-container">
       <ProblemForm />
     </div>
   );
