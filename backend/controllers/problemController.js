@@ -6,6 +6,8 @@ const { generateFile } = require("../utility/generateFile");
 const { executeJava } = require("../utility/executeJava");
 const { executeCpp } = require("../utility/executeCpp");
 
+const isValidProblem = (value) => mongoose.Types.ObjectId.isValid(value);
+
 const getProblems = async (req, res) => {
   try {
     const problems = await Problem.find();
@@ -119,9 +121,7 @@ const addTestCase = async (req, res) => {
       .json({ success: false, error: "Output cannot be empty" });
   }
 
-  const isValidProblem = mongoose.Types.ObjectId.isValid(problemId);
-
-  if (!isValidProblem) {
+  if (!isValidProblem(problemId)) {
     return res.status(400).json({
       success: false,
       error: "Invalid Problem Id or Problem not found",
@@ -161,8 +161,14 @@ const addTestCase = async (req, res) => {
 
 const submitProblem = async (req, res) => {
   try {
-    const { language, code } = req.body;
+    const { language, code, problemId } = req.body;
 
+    if (!isValidProblem(problemId)) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid Problem Id or Problem not found",
+      });
+    }
     if (!language) {
       return res
         .status(400)
@@ -178,15 +184,47 @@ const submitProblem = async (req, res) => {
       if (language === "C++") {
         const lang = "cpp";
         const filepath = await generateFile(lang, code);
-        const output = await executeCpp(filepath);
+
+        getSolution(problemId).then((solution) => {
+          const testCases = solution.test_cases;
+          for (let i = 0; i < testCases.length; i++) {
+            const output = executeCpp(filepath, testCases[i]);
+            if (testCases[i].output != output) {
+              return res.status(200).json({
+                status: "200",
+                message: `Test Case ${i + 1} failed`,
+              });
+            }
+          }
+
+          return res.status(200).json({
+            status: "200",
+            message: "All test cases passed successfully",
+          });
+        });
 
         return res.status(200).json({ filepath, output });
       } else if (language === "Java") {
         const lang = "java";
         const filepath = await generateFile(lang, code);
-        const output = await executeJava(filepath);
 
-        return res.status(200).json({ filepath, output });
+        getSolution(problemId).then((solution) => {
+          const testCases = solution.test_cases;
+          for (let i = 0; i < testCases.length; i++) {
+            const output = executeJava(filepath, testCases[i]);
+            if (testCases[i].output != output) {
+              return res.status(200).json({
+                status: "200",
+                message: `Test Case ${i + 1} failed`,
+              });
+            }
+          }
+
+          return res.status(200).json({
+            status: "200",
+            message: "All test cases passed successfully",
+          });
+        });
       }
     } catch (err) {
       return res.status(500).json({ error: err });
@@ -194,6 +232,11 @@ const submitProblem = async (req, res) => {
   } catch (e) {
     return res.status(500).json({ message: e.message });
   }
+};
+
+const getSolution = async (problemId) => {
+  const solution = await Solution.findOne({ problemId: problemId });
+  return solution;
 };
 
 module.exports = {

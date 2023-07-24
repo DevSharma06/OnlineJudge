@@ -47,7 +47,7 @@ const ProblemDescription = (props) => {
               onClick={submitClickHandler}
               className="problem-desc_button"
             >
-              Submit
+              Solve Now
             </button>
           </div>
         </div>

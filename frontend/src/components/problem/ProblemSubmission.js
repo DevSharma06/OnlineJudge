@@ -28,7 +28,7 @@ const ProblemSubmission = (props) => {
           ></textarea>
 
           <div className="buttons">
-            <button>Upload Solution</button>
+            <button>Submit Solution</button>
             <button onClick={cancelClickHandler}>Cancel</button>
           </div>
         </form>
