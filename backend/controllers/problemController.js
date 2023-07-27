@@ -228,18 +228,45 @@ const submitProblem = async (req, res) => {
             message: "All test cases passed successfully",
           });
         });
-
-        return res.status(200).json({ filepath, output });
       } else if (language === "Java") {
         const lang = "java";
         const filepath = await generateFile(lang, code);
 
         getSolution(problemId).then((solution) => {
           const testCases = solution.test_cases;
-          for (let i = 0; i < testCases.length; i++) {
-            const output = executeJava(filepath, testCases[i]);
 
-            if (testCases[i].output.trim() != output.trim()) {
+          // console.log(testCases[0]);
+
+          for (let i = 0; i < testCases.length; i++) {
+            let input = "";
+            for (let j = 0; j < testCases[i]?.input.length; j++) {
+              input = input.concat(testCases[i]?.input[j] + "\n");
+            }
+            let expectedOutput = "";
+            for (let j = 0; j < testCases[i]?.output.length; j++) {
+              expectedOutput = expectedOutput.concat(
+                testCases[i]?.output[j] + "\n"
+              );
+            }
+
+            // console.log("Input: " + input);
+            // console.log("Output: " + expectedOutput);
+            // let a1 = "";
+            // for (var k = 0; k < expectedOutput.length; k++) {
+            //   a1 = a1.concat(expectedOutput.charCodeAt(k)+",");
+            // }
+            // console.log(a1);
+
+            var output = executeJava(filepath, input);
+            output = output.replace(/[\r]/g, '')
+            // console.log("Actual Output: " + output);
+            // a1 = "";
+            // for (var k = 0; k < output.length; k++) {
+            //   a1 = a1.concat(output.charCodeAt(k)+",");
+            // }
+            // console.log(a1);
+
+            if (expectedOutput.trim() !== output.trim()) {
               return res.status(200).json({
                 status: "400",
                 message: `Test Case ${i + 1} failed. Please try again!`,

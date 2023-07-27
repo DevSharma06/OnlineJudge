@@ -15,8 +15,9 @@ const executeJava = (filepath, inputTestCase) => {
 
   try {
     const output = execSync(`java ${filepath} -jar ./${jobId}.jar`, {
-      input: inputTestCase.input,
+      input: inputTestCase.toString(),
     });
+
     return output.toString();
   } catch (err) {
     console.log(err);
