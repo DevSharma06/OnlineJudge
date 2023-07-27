@@ -90,8 +90,10 @@ const ProblemForm = () => {
 
     const json = await response.json();
 
+    console.log(json);
+
     if (!response.ok) {
-      alert(json.error);
+      alert(json.message);
     } else {
       // alert(json);
       navigate("/");

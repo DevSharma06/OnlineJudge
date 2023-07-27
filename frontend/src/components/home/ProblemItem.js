@@ -31,7 +31,12 @@ const ProblemItem = (props) => {
         ))}
       </p>
       <div className="button">
-        <button onClick={handleTestCaseClick}>Add Test Cases</button>
+        <button
+          style={{ width: "150px", marginRight: "10px" }}
+          onClick={handleTestCaseClick}
+        >
+          Add Test Cases
+        </button>
         <button onClick={handleSolveClick}>Solve</button>
       </div>
     </div>

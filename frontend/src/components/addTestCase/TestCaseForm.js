@@ -33,7 +33,7 @@ const TestCaseForm = (props) => {
       return;
     }
 
-    const solution = {
+    const testCase = {
       problemId: problem._id,
       input: enteredInput,
       output: enteredOutput,
@@ -41,7 +41,7 @@ const TestCaseForm = (props) => {
 
     const response = await fetch("/api/problems/addTestCase", {
       method: "POST",
-      body: JSON.stringify(solution),
+      body: JSON.stringify(testCase),
       headers: {
         "Content-Type": "application/json",
       },

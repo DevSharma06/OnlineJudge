@@ -163,6 +163,35 @@ header a {
 }
 
 /* Submit */
+
+.submit-result-container {
+  background: var(--fg-color);
+  border-radius: 5px;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+  width: 60%;
+  text-align: center;
+  justify-content: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* .success-container {
+  background: var(--primary);
+  border-radius: 5px;
+  margin: auto;
+  padding: 10px;
+  position: relative;
+  width: 50%;
+  text-align: center;
+  color: white;
+} */
+
+.success-container .p {
+  margin: 0px;
+  padding: 0px;
+}
+
 .submit-container {
   background: var(--fg-color);
   border-radius: 5px;
@@ -216,7 +245,8 @@ header a {
   text-align: center;
 }
 
-.form-container h2, h3 {
+.form-container h2,
+h3 {
   color: white;
 }
 

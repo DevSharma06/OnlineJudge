@@ -9,7 +9,6 @@ const ProblemDescription = (props) => {
     e.preventDefault();
 
     setSubmitClicked(!isSubmitClicked);
-    console.log(isSubmitClicked);
   };
 
   return (
