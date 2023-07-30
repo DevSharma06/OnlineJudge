@@ -5,6 +5,8 @@ const Solution = require("../model/solutionModel");
 const { generateFile } = require("../utility/generateFile");
 const { executeJava } = require("../utility/executeJava");
 const { executeCpp } = require("../utility/executeCpp");
+const { executePython } = require("../utility/executePython");
+const { executeC } = require("../utility/executeC");
 
 const isValidProblem = (value) => mongoose.Types.ObjectId.isValid(value);
 
@@ -207,79 +209,65 @@ const submitProblem = async (req, res) => {
     }
 
     try {
-      if (language === "C++") {
-        const lang = "cpp";
-        const filepath = await generateFile(lang, code);
+      let lang = "";
+      let output = "";
+      if (language === "C") lang = "c";
+      else if (language === "C++") lang = "cpp";
+      else if (language === "Java") lang = "java";
+      else if (language === "Python") lang = "py";
 
-        getSolution(problemId).then((solution) => {
-          const testCases = solution.test_cases;
-          for (let i = 0; i < testCases.length; i++) {
-            const output = executeCpp(filepath, testCases[i]);
-            if (testCases[i].output != output) {
-              return res.status(200).json({
-                status: "200",
-                message: `Test Case ${i + 1} failed`,
-              });
-            }
+      const filepath = await generateFile(lang, code);
+
+      getSolution(problemId).then((solution) => {
+        const testCases = solution.test_cases;
+        // console.log(testCases[0]);
+
+        for (let i = 0; i < testCases.length; i++) {
+          let input = "";
+          for (let j = 0; j < testCases[i]?.input.length; j++) {
+            input = input.concat(testCases[i]?.input[j] + "\n");
           }
-
-          return res.status(200).json({
-            status: "200",
-            message: "All test cases passed successfully",
-          });
-        });
-      } else if (language === "Java") {
-        const lang = "java";
-        const filepath = await generateFile(lang, code);
-
-        getSolution(problemId).then((solution) => {
-          const testCases = solution.test_cases;
-
-          // console.log(testCases[0]);
-
-          for (let i = 0; i < testCases.length; i++) {
-            let input = "";
-            for (let j = 0; j < testCases[i]?.input.length; j++) {
-              input = input.concat(testCases[i]?.input[j] + "\n");
-            }
-            let expectedOutput = "";
-            for (let j = 0; j < testCases[i]?.output.length; j++) {
-              expectedOutput = expectedOutput.concat(
-                testCases[i]?.output[j] + "\n"
-              );
-            }
-
-            // console.log("Input: " + input);
-            // console.log("Output: " + expectedOutput);
-            // let a1 = "";
-            // for (var k = 0; k < expectedOutput.length; k++) {
-            //   a1 = a1.concat(expectedOutput.charCodeAt(k)+",");
-            // }
-            // console.log(a1);
-
-            var output = executeJava(filepath, input);
-            output = output.replace(/[\r]/g, '')
-            // console.log("Actual Output: " + output);
-            // a1 = "";
-            // for (var k = 0; k < output.length; k++) {
-            //   a1 = a1.concat(output.charCodeAt(k)+",");
-            // }
-            // console.log(a1);
-
-            if (expectedOutput.trim() !== output.trim()) {
-              return res.status(200).json({
-                status: "400",
-                message: `Test Case ${i + 1} failed. Please try again!`,
-              });
-            }
+          let expectedOutput = "";
+          for (let j = 0; j < testCases[i]?.output.length; j++) {
+            expectedOutput = expectedOutput.concat(
+              testCases[i]?.output[j] + "\n"
+            );
           }
+          // console.log("Input: " + input);
+          // console.log("Output: " + expectedOutput);
+          // let a1 = "";
+          // for (var k = 0; k < expectedOutput.length; k++) {
+          //   a1 = a1.concat(expectedOutput.charCodeAt(k)+",");
+          // }
+          // console.log(a1);
 
-          return res.status(200).json({
-            status: "200",
-            message: "All test cases passed successfully",
-          });
+          if (language === "C") output = executeC(filepath, input);
+          if (language === "C++") output = executeCpp(filepath, input);
+          else if (language === "Java") output = executeJava(filepath, input);
+          else if (language === "Python")
+            output = executePython(filepath, input);
+          output = output.replace(/[\r]/g, "");
+
+          // console.log("Actual Output: " + output);
+          // a1 = "";
+          // for (var k = 0; k < output.length; k++) {
+          //   a1 = a1.concat(output.charCodeAt(k)+",");
+          // }
+          // console.log(a1);
+
+          if (expectedOutput.trim() !== output.trim()) {
+            return res.status(200).json({
+              status: "400",
+              message: `Test Case ${i + 1} failed. Please try again!`,
+            });
+          }
+        }
+
+        return res.status(200).json({
+          status: "200",
+          message: "All test cases passed successfully",
         });
-      }
+      });
     } catch (err) {
       return res.status(500).json({ message: err });
     }
