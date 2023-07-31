@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const Problem = require("../model/problemModel");
-const Solution = require("../model/solutionModel");
+const Problem = require("../models/problemModel");
+const Solution = require("../models/solutionModel");
 
 const { generateFile } = require("../utility/generateFile");
 const { executeJava } = require("../utility/executeJava");
