@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useSignup } from "../../hooks/useSignup";
+import { useLogin } from "../../hooks/useLogin";
 
 const emailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -17,6 +18,14 @@ const LoginForm = (props) => {
     e.preventDefault();
 
     await signup(email, password);
+  };
+
+  const { login, error: loginError, isLoading: loginIsLoading } = useLogin();
+
+  const loginUser = async (e, email, password) => {
+    e.preventDefault();
+
+    await login(email, password);
   };
 
   const [formInputValidity, setFormInputValidity] = useState({
@@ -49,6 +58,8 @@ const LoginForm = (props) => {
 
     if (name === "Register") {
       await signupUser(e, enteredEmail, enteredPassword);
+    } else {
+      await loginUser(e, enteredEmail, enteredPassword);
     }
   };
 
@@ -74,10 +85,11 @@ const LoginForm = (props) => {
           )}
         </div>
 
-        <button onClick={loginHandler} disabled={isLoading}>
+        <button onClick={loginHandler} disabled={isLoading || loginIsLoading}>
           {name}
         </button>
         {error && <div className="error">{error}</div>}
+        {loginError && <div className="error">{loginError}</div>}
       </form>
     </div>
   );
