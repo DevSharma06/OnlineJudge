@@ -10,6 +10,11 @@ const {
   addTestCase,
 } = require("../controllers/problemController");
 
+const requireAuth = require("../middleware/requireAuth");
+
+// require auth for all workout routes
+router.use(requireAuth);
+
 router.get("/getProblems/", getProblems);
 
 router.get("/getProblemById/:id", getProblemById);
