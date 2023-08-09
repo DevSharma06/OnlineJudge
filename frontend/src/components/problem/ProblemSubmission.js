@@ -1,6 +1,7 @@
 import { FaBackspace, FaCheckCircle } from "react-icons/fa";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useRef, useState } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import CircularProgress from "@mui/joy/CircularProgress";
 
 const isEmpty = (value) => value.trim() === "";
@@ -25,6 +26,7 @@ let successContainerStyle = {
 };
 
 const ProblemSubmission = (props) => {
+  const { user } = useAuthContext();
   const problem = props.problem;
 
   const languageRef = useRef();
@@ -63,6 +65,7 @@ const ProblemSubmission = (props) => {
       body: JSON.stringify(solution),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
 
@@ -97,6 +100,9 @@ const ProblemSubmission = (props) => {
     const IsFormValid = enteredCodeIsValid;
 
     if (!IsFormValid) {
+      return;
+    }
+    if (!user) {
       return;
     }
 

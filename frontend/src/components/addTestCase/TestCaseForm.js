@@ -1,8 +1,10 @@
 import { useRef, useState } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const isEmpty = (value) => value.trim() === "";
 
 const TestCaseForm = (props) => {
+  const { user } = useAuthContext();
   const problem = props.problem;
 
   const inputRef = useRef();
@@ -32,6 +34,9 @@ const TestCaseForm = (props) => {
     if (!IsFormValid) {
       return;
     }
+    if (!user) {
+      return;
+    }
 
     const testCase = {
       problemId: problem._id,
@@ -44,6 +49,7 @@ const TestCaseForm = (props) => {
       body: JSON.stringify(testCase),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
 

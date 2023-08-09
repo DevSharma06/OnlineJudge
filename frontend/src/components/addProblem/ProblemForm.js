@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const isEmpty = (value) => value.trim() === "";
 const isTenChars = (value) => value.trim().length >= 10;
 const isLangSelected = (arr) => arr.length === 0;
 
 const ProblemForm = () => {
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
   const languages = ["C", "C++", "Java", "Python"];
@@ -66,6 +68,9 @@ const ProblemForm = () => {
     if (!formIsValid) {
       return;
     }
+    if (!user) {
+      return;
+    }
 
     const testCases = {
       input: [...inputArr],
@@ -85,6 +90,7 @@ const ProblemForm = () => {
       body: JSON.stringify(enteredProblem),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
 
