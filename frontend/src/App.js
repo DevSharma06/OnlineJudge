@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { useAuthContext } from "./hooks/useAuthContext";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Problem from "./pages/Problem";
@@ -8,20 +9,36 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 function App() {
+  const { user } = useAuthContext();
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/problem/:value" element={<Problem />} />
-            <Route path="/addProblem" element={<AddProblem />} />
+            <Route
+              path="/login"
+              element={!user ? <Login /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/register"
+              element={!user ? <Register /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/"
+              element={user ? <Home /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/problem/:value"
+              element={user ? <Problem /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/addProblem"
+              element={user ? <AddProblem /> : <Navigate to="/login" />}
+            />
             <Route
               path="/problem/addTestCase/:value"
-              element={<AddTestCase />}
+              element={user ? <AddTestCase /> : <Navigate to="/login" />}
             />
           </Routes>
         </div>
