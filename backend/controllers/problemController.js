@@ -255,6 +255,13 @@ const submitProblem = async (req, res) => {
           // }
           // console.log(a1);
 
+          if(output === "Code compilation (or) execution failed. Please check the code and try again") {
+            return res.status(200).json({
+              status: "400",
+              message: output,
+            });
+          }
+
           if (expectedOutput.trim() !== output.trim()) {
             return res.status(200).json({
               status: "400",
@@ -265,7 +272,7 @@ const submitProblem = async (req, res) => {
 
         return res.status(200).json({
           status: "200",
-          message: "All test cases passed successfully",
+          message: `Code execution successful. Test cases passed ${testCases.length} out of ${testCases.length}`,
         });
       });
     } catch (err) {

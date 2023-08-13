@@ -7,6 +7,17 @@ import CircularProgress from "@mui/joy/CircularProgress";
 const isEmpty = (value) => value.trim() === "";
 const isTenChars = (value) => value.trim().length >= 10;
 
+const sampleJavaCode = `import java.util.Scanner;
+
+// Please make sure the class name is Main
+
+public class Main {
+    public static void main(String[] args) {
+        // Write your code here
+
+    }
+}`;
+
 const textStyle = {
   margin: "0px",
   padding: "0px",
@@ -35,6 +46,7 @@ const ProblemSubmission = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [responseStatus, setResponseStatus] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
+  const [sampleCode, setSampleCode] = useState("");
 
   let background = "#1aac83";
   if (isLoading) {
@@ -58,9 +70,17 @@ const ProblemSubmission = (props) => {
     code: true,
   });
 
+  const onLanguageChange = () => {
+    if(languageRef.current.value == "Java") {
+      setSampleCode(sampleJavaCode)
+    } else {
+      setSampleCode("")
+    }
+  }
+
   const submitProblem = async (solution) => {
     setIsLoading(true);
-    const response = await fetch("/api/problems/submitProblem", {
+    const response = await fetch("http://localhost:4000/api/problems/submitProblem", {
       method: "POST",
       body: JSON.stringify(solution),
       headers: {
@@ -145,7 +165,7 @@ const ProblemSubmission = (props) => {
           <form>
             <div>
               <label htmlFor="languages">Language</label>
-              <select name="languages" id="languages" ref={languageRef}>
+              <select name="languages" id="languages" ref={languageRef} onChange={onLanguageChange}>
                 {problem.languages.map((l) => (
                   <option value={l} key={l}>
                     {l}
@@ -158,6 +178,8 @@ const ProblemSubmission = (props) => {
               name="code-input"
               placeholder="Paste your code here..."
               ref={codeRef}
+              defaultValue={sampleCode}
+              spellCheck="false"
             ></textarea>
             {!formValid.code && (
               <div style={textStyle}>

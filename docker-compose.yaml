@@ -1,0 +1,17 @@
+version: "1.0"
+services:
+  api:
+    build: ./backend
+    container_name: oj_backend
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./backend:/oj_backend
+      - /oj_backend/node_modules
+  frontend:
+    build: ./frontend
+    container_name: oj_frontend
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true

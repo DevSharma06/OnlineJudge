@@ -10,7 +10,7 @@ const Problem = () => {
 
   useEffect(() => {
     const getProblem = async () => {
-      const response = await fetch(`/api/problems/getProblemById/${value}`, {
+      const response = await fetch(`http://localhost:4000/api/problems/getProblemById/${value}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

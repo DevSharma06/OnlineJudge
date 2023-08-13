@@ -85,7 +85,7 @@ const ProblemForm = () => {
       test_cases: testCases,
     };
 
-    const response = await fetch("/api/problems/addProblem", {
+    const response = await fetch("http://localhost:4000/api/problems/addProblem", {
       method: "POST",
       body: JSON.stringify(enteredProblem),
       headers: {

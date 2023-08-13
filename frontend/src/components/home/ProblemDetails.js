@@ -8,7 +8,7 @@ const ProblemDetails = () => {
 
   useEffect(() => {
     const fetchProblems = async () => {
-      const response = await fetch("/api/problems/getProblems", {
+      const response = await fetch("http://localhost:4000/api/problems/getProblems", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
