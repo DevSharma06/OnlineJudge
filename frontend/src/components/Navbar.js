@@ -6,6 +6,18 @@ const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
 
+  const showAddProblem = () => {
+    if (user) {
+      if (user.role === "Mod" || user.role === "Admin") {
+        return (
+          <li>
+            <Link to="/addProblem">Add Problem</Link>
+          </li>
+        );
+      }
+    }
+  };
+
   const handleLogout = () => {
     logout();
   };
@@ -25,12 +37,7 @@ const Navbar = () => {
               <Link onClick={handleLogout}>Logout</Link>
             </li>
           )}
-          {user && (
-            <li>
-              <Link to="/addProblem">Add Problem</Link>
-            </li>
-          )}
-
+          {showAddProblem()}
           {!user && (
             <li>
               <Link to="/register">Register</Link>

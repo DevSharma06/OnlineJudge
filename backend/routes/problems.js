@@ -11,8 +11,9 @@ const {
 } = require("../controllers/problemController");
 
 const requireAuth = require("../middleware/requireAuth");
+const requireModRole = require("../middleware/requireModRole");
 
-// require auth for all workout routes
+// require auth for all problem routes
 router.use(requireAuth);
 
 router.get("/getProblems/", getProblems);
@@ -23,8 +24,8 @@ router.get("/getProblemByNo/:no", getProblemByNo);
 
 router.post("/submitProblem/", submitProblem);
 
-router.post("/addProblem/", addProblem);
+router.post("/addProblem/", requireModRole, addProblem);
 
-router.post("/addTestCase/", addTestCase);
+router.post("/addTestCase/", requireModRole, addTestCase);
 
 module.exports = router;

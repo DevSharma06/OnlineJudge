@@ -246,6 +246,7 @@ const submitProblem = async (req, res) => {
           else if (language === "Java") output = executeJava(filepath, input);
           else if (language === "Python")
             output = executePython(filepath, input);
+          console.log("Output : " + output);
           output = output.replace(/[\r]/g, "");
 
           // console.log("Actual Output: " + output);
@@ -255,7 +256,10 @@ const submitProblem = async (req, res) => {
           // }
           // console.log(a1);
 
-          if(output === "Code compilation (or) execution failed. Please check the code and try again") {
+          if (
+            output ===
+            "Code compilation (or) execution failed. Please check the code and try again"
+          ) {
             return res.status(200).json({
               status: "400",
               message: output,

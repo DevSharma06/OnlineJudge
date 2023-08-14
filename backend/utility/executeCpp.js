@@ -10,22 +10,18 @@ if (!fs.existsSync(outputPath)) {
 
 const executeCpp = (filePath, inputTestCase) => {
   const jobId = path.basename(filePath).split(".")[0];
-  const outPath = path.join(outputPath, `${jobId}.exe`);
+  const outPath = path.join(outputPath, `${jobId}.out`);
 
-  return new Promise((resolve, reject) => {
-    try {
-      const output = execSync(
-        `g++ ${filePath} -o ${outPath} && cd ${outputPath} && .\\${jobId}.exe`,
-        { input: inputTestCase }
-      );
-      resolve(output.toString());
-    } catch (err) {
-      console.log(err);
-      reject(
-        "Code compilation (or) execution failed. Please check the code and try again"
-      );
-    }
-  });
+  try {
+    const output = execSync(
+      `g++ ${filePath} -o ${outPath} && cd ${outputPath} && ./${jobId}.out`,
+      { input: inputTestCase }
+    );
+    return output.toString();
+  } catch (err) {
+    console.log(err);
+    return "Code compilation (or) execution failed. Please check the code and try again";
+  }
 };
 
 module.exports = {

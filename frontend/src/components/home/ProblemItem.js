@@ -1,8 +1,23 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const ProblemItem = (props) => {
   const problem = props.problem;
   const navigate = useNavigate();
+  const { user } = useAuthContext();
+
+  const showAddTestCase = () => {
+    if (user.role === "Mod" || user.role === "Admin") {
+      return (
+        <button
+          style={{ width: "150px", marginRight: "10px" }}
+          onClick={handleTestCaseClick}
+        >
+          Add Test Cases
+        </button>
+      );
+    }
+  };
 
   const handleSolveClick = () => {
     navigate(`/problem/${problem._id}`);
@@ -31,12 +46,7 @@ const ProblemItem = (props) => {
         ))}
       </p>
       <div className="button">
-        <button
-          style={{ width: "150px", marginRight: "10px" }}
-          onClick={handleTestCaseClick}
-        >
-          Add Test Cases
-        </button>
+        {showAddTestCase()}
         <button onClick={handleSolveClick}>Solve</button>
       </div>
     </div>

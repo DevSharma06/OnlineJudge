@@ -14,6 +14,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    required: true,
+    default: "User"
+  },
 });
 
 //static Register method
@@ -53,13 +58,13 @@ userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
 
   if (!user) {
-    throw Error("Incorrect login credentials - email");
+    throw Error("Incorrect login credentials");
   }
 
   const match = await bcrypt.compare(password, user.password);
 
   if (!match) {
-    throw Error("Incorrect login credentials - password");
+    throw Error("Incorrect login credentials");
   }
 
   return user;

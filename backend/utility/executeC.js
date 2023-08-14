@@ -10,12 +10,12 @@ if (!fs.existsSync(outputPath)) {
 
 const executeC = (filePath, inputTestCase) => {
   const jobId = path.basename(filePath).split(".")[0];
-  const outPath = path.join(outputPath, `${jobId}.exe`);
+  const outPath = path.join(outputPath, `${jobId}.out`);
 
   return new Promise((resolve, reject) => {
     try {
       const output = execSync(
-        `gcc ${filePath} -o ${outPath} && cd ${outputPath} && .\\${jobId}.exe`,
+        `gcc ${filePath} -o ${outPath} && cd ${outputPath} && ./${jobId}.out`,
         { input: inputTestCase }
       );
       resolve(output.toString());
