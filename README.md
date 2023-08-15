@@ -63,7 +63,7 @@ An Online Judge is a virtual arena that allows coders to submit solutions to a v
 - Start the server
     ```
     cd ../backend
-    node run dev
+    npm run dev
 - Start the client.
     ```
     cd ../frontend
