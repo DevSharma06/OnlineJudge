@@ -73,21 +73,48 @@ header a {
   z-index: 1;
 }
 
+/* .dropdown ul {
+  flex-direction: column;
+  white-space: nowrap;
+} */
+
 .dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
-  left: -200%;
+  left: 0;
+  right: 0;
   background-color: var(--bg-color);
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 2;
   list-style-type: none;
   padding: 0;
   border-radius: 6px;
+  max-width: 300px;
+  flex-direction: column;
+  white-space: nowrap;
 }
 
 .dropdown-content.active {
-  display: block;
+  display: table;
+  table-layout: fixed;
+  width: auto;
+  /* Adjust the position to be below and towards the left */
+  position: absolute;
+  top: 100%; /* Position below the button */
+  transform: translateX(-40%); /* Position to the left */
+}
+
+/* Style for the individual list items */
+.dropdown-content li {
+  display: table-row; /* Make li elements behave like table rows */
+}
+
+/* Style for the text within each list item */
+.dropdown-content li a {
+  display: table-cell; /* Make text within li behave like table cells */
+  white-space: nowrap; /* Prevent text from wrapping */
+  padding: 10px; /* Adjust padding as needed */
 }
 
 /* .dropdown-content li {
@@ -432,34 +459,41 @@ button {
   background-color: var(--foreground);
 }
 
-.email-input {
-  box-sizing: border-box;
-  width: 100%;
+.username {
+  display: inline-block;
+  width: 400px;
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-.email-input label {
-  flex: 1;
-}
-
-.email-input input {
-  flex: 2;
-}
-
+.username-input,
+.email-input,
 .password-input {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   align-items: center;
+  text-align: left;
 }
 
+.username-input label,
+.email-input label,
 .password-input label {
   flex: 1;
 }
 
+.username-input input,
+.email-input input,
 .password-input input {
   flex: 2;
+}
+
+small {
+  padding: 10px;
+  color: var(--error);
+  border-radius: 4px;
+  margin: 10px 0 0 0;
 }
 
 div.error {

@@ -5,6 +5,11 @@ const validator = require("validator");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   email: {
     type: String,
     required: true,
@@ -17,14 +22,15 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: true,
-    default: "User"
+    default: "User",
   },
 });
 
 //static Register method
-userSchema.statics.register = async function (email, password) {
+userSchema.statics.register = async function (username, email, password) {
   //validation
-  if (!email || !password) {
+  console.log(username);
+  if (!username || !email || !password) {
     throw Error("All fields are mandatory");
   }
   if (!validator.isEmail(email)) {
@@ -43,7 +49,7 @@ userSchema.statics.register = async function (email, password) {
   const salt = await bcrypt.genSalt(5);
   const hash = await bcrypt.hash(password, salt);
 
-  const user = await this.create({ email, password: hash });
+  const user = await this.create({ username, email, password: hash });
 
   return user;
 };

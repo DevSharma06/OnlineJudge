@@ -2,11 +2,12 @@ import { useRef, useState } from "react";
 import { useSignup } from "../../hooks/useSignup";
 import { useLogin } from "../../hooks/useLogin";
 
+const usernameRegex = /^[a-zA-Z0-9_]{5,}[a-zA-Z]+[0-9]*$/;
+const isUsernameValid = (value) => value.match(usernameRegex);
 const emailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const isEmailValid = (value) => value.match(emailRegex);
-const passwordRegex =
-  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 const isPasswordValid = (value) => value.match(passwordRegex);
 
 const LoginForm = (props) => {
@@ -14,10 +15,10 @@ const LoginForm = (props) => {
 
   const { signup, error, isLoading } = useSignup();
 
-  const signupUser = async (e, email, password) => {
+  const signupUser = async (e, username, email, password) => {
     e.preventDefault();
 
-    await signup(email, password);
+    await signup(username, email, password);
   };
 
   const { login, error: loginError, isLoading: loginIsLoading } = useLogin();
@@ -29,35 +30,43 @@ const LoginForm = (props) => {
   };
 
   const [formInputValidity, setFormInputValidity] = useState({
+    username: true,
     email: true,
     password: true,
   });
 
+  const usernameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
   const loginHandler = async (e) => {
     e.preventDefault();
 
+    const enteredUsername = usernameInputRef.current.value;
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
+    let usernameIsValid = true;
+    if (name == "Register") {
+      usernameIsValid = isUsernameValid(enteredUsername);
+    }
     const emailIsValid = isEmailValid(enteredEmail);
     const passwordIsValid = isPasswordValid(enteredPassword);
 
     setFormInputValidity({
+      username: usernameIsValid,
       email: emailIsValid,
       password: passwordIsValid,
     });
 
-    const isFormValid = emailIsValid && passwordIsValid;
+    const isFormValid = usernameIsValid && emailIsValid && passwordIsValid;
 
     if (!isFormValid) {
       return;
     }
 
     if (name === "Register") {
-      await signupUser(e, enteredEmail, enteredPassword);
+      await signupUser(e, enteredUsername, enteredEmail, enteredPassword);
     } else {
       await loginUser(e, enteredEmail, enteredPassword);
     }
@@ -67,21 +76,48 @@ const LoginForm = (props) => {
     <div className="login-container">
       <h3>{name}</h3>
       <form className="login">
+        {name == "Register" && (
+          <div className="username">
+            <div className="username-input">
+              <label>Username</label>
+              <input
+                type="username"
+                ref={usernameInputRef}
+                autoComplete="off"
+              />
+            </div>
+            <div>
+              {!formInputValidity.username && (
+                <small>
+                  Username must be alphanumeric and min 5 characters with _ as
+                  special character
+                </small>
+              )}
+            </div>
+          </div>
+        )}
+
         <div className="email-input">
           <label>Email</label>
-          <input type="email" ref={emailInputRef} />
+          <input type="email" ref={emailInputRef} autoComplete="off" />
         </div>
         <div>
-          {!formInputValidity.email && <p>Please enter a valid email</p>}
+          {!formInputValidity.email && (
+            <small>Please enter a valid email</small>
+          )}
         </div>
 
         <div className="password-input">
           <label>Password</label>
-          <input type="password" ref={passwordInputRef} />
+          <input type="password" ref={passwordInputRef} autoComplete="off" />
         </div>
         <div>
           {!formInputValidity.password && (
-            <p>Please enter a valid Password (8 - 15 characters long)</p>
+            <small>
+              Password must have at least 8 characters that include at least 1
+              lowercase character, 1 uppercase characters, 1 number, and 1
+              special character in (!@#$%^&*)
+            </small>
           )}
         </div>
 

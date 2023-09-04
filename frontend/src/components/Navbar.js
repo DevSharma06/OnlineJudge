@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { MdAccountCircle } from "react-icons/md";
-import userLogo from "../assets/images/user.png";
 
 const Navbar = () => {
   const { logout } = useLogout();
@@ -78,7 +77,7 @@ const Navbar = () => {
                   }`}
                 >
                   <li onClick={closeDropdown}>
-                    <Link>{user.email}</Link>
+                    <Link>{user.username}</Link>
                   </li>
                   <li onClick={closeDropdown}>
                     <Link onClick={handleLogout}>Logout</Link>
