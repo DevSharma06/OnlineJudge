@@ -42,12 +42,14 @@ const LoginForm = (props) => {
   const loginHandler = async (e) => {
     e.preventDefault();
 
-    const enteredUsername = usernameInputRef.current.value;
+    
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
+    let enteredUsername = ""
     let usernameIsValid = true;
     if (name == "Register") {
+      enteredUsername = usernameInputRef.current.value;
       usernameIsValid = isUsernameValid(enteredUsername);
     }
     const emailIsValid = isEmailValid(enteredEmail);

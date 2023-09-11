@@ -7,6 +7,7 @@ import AddProblem from "./pages/AddProblem";
 import AddTestCase from "./pages/AddTestCase";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import UserDetails from "./components/users/UserDetails";
 
 function App() {
   const { user } = useAuthContext();
@@ -39,6 +40,10 @@ function App() {
             <Route
               path="/problem/addTestCase/:value"
               element={user ? <AddTestCase /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/userDetails"
+              element={user ? <UserDetails /> : <Navigate to="/login" />}
             />
           </Routes>
         </div>

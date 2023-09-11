@@ -1,0 +1,28 @@
+.users {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    color: white;
+    background: var(--fg-color);
+    box-sizing: border-box;
+    margin: 2px 20px 0 20px;
+    padding: 0px 20px 0 20px;
+  }
+  
+  .no {
+      flex: 1;
+      margin: 0 20px 0 0;
+  }
+  .username {
+      flex: 2;
+      margin: 0 20px 0 0;
+  }
+  .role {
+      flex: 1;
+      margin: 0 20px 0 0;
+  }
+  .role-requested {
+      flex: 2;
+      margin: 0;
+  }
+  

@@ -47,6 +47,18 @@ const Navbar = () => {
     }
   };
 
+  const showUserDetails = () => {
+    if (user) {
+      if (user.role === "Admin") {
+        return (
+          <li>
+            <Link to="/userDetails">Users Details</Link>
+          </li>
+        );
+      }
+    }
+  };
+
   const handleLogout = () => {
     logout();
   };
@@ -62,6 +74,7 @@ const Navbar = () => {
         </div> */}
         <ul>
           {showAddProblem()}
+          {showUserDetails()}
           {user && (
             <li className="dropdown" ref={dropdownRef}>
               <div className="account-icon">
