@@ -1,5 +1,5 @@
 const requireModRole = (req, res, next) => {
-  const { role } = req.params;
+  const { role } = req.headers;
 
   if (role === "Mod" || role === "Admin") {
     next();

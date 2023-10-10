@@ -111,7 +111,7 @@ const LoginForm = (props) => {
 
         <div className="password-input">
           <label>Password</label>
-          <input type="password" ref={passwordInputRef} autoComplete="off" />
+          <input type="password" ref={passwordInputRef} autoComplete="new-password" />
         </div>
         <div>
           {!formInputValidity.password && (

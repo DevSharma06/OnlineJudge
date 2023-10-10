@@ -44,14 +44,18 @@ const TestCaseForm = (props) => {
       output: enteredOutput,
     };
 
-    const response = await fetch("http://localhost:4000/api/problems/addTestCase", {
-      method: "POST",
-      body: JSON.stringify(testCase),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      "http://localhost:4000/api/problems/addTestCase",
+      {
+        method: "POST",
+        body: JSON.stringify(testCase),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+          Role: user.role,
+        },
+      }
+    );
 
     const json = await response.json();
 

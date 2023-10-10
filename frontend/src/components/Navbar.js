@@ -74,7 +74,7 @@ const Navbar = () => {
         </div> */}
         <ul>
           {showAddProblem()}
-          {showUserDetails()}
+          {/* {showUserDetails()} */}
           {user && (
             <li className="dropdown" ref={dropdownRef}>
               <div className="account-icon">

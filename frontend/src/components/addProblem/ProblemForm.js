@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import "../addProblem/ProblemForm.css";
 
 const isEmpty = (value) => value.trim() === "";
 const isTenChars = (value) => value.trim().length >= 10;
@@ -85,14 +86,18 @@ const ProblemForm = () => {
       test_cases: testCases,
     };
 
-    const response = await fetch("http://localhost:4000/api/problems/addProblem", {
-      method: "POST",
-      body: JSON.stringify(enteredProblem),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      "http://localhost:4000/api/problems/addProblem",
+      {
+        method: "POST",
+        body: JSON.stringify(enteredProblem),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+          Role: user.role,
+        },
+      }
+    );
 
     const json = await response.json();
 

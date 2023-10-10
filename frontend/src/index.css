@@ -325,103 +325,6 @@ header a {
   cursor: pointer;
 }
 
-/* Problem Form */
-
-.form-container {
-  width: 100%;
-  text-align: center;
-}
-
-.form-container h2,
-h3 {
-  color: white;
-}
-
-.problem-form {
-  background: var(--fg-color);
-  border-radius: 5px;
-  margin: 0 0 30px 0;
-  padding: 20px;
-  color: white;
-  display: inline-block;
-  width: 800px;
-}
-
-.problem-form label {
-  display: inline-block;
-}
-
-.problem-form_desc {
-  text-align: left;
-  margin: 0;
-}
-
-.problem-form input[type="text"],
-.problem-form textarea,
-.problem-form select {
-  width: 85%;
-  padding: 10px;
-  margin-top: 10px;
-  margin-left: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-  resize: vertical;
-  background-color: var(--bg-color);
-  color: white;
-}
-
-input[type="checkbox"] {
-  padding-left: 0%;
-  border: 1px solid red;
-  border-radius: 4px;
-  resize: vertical;
-  vertical-align: middle;
-  float: left;
-  margin-left: 10px;
-  margin-top: 6px;
-  margin-right: 6px;
-  cursor: pointer;
-}
-
-.col-2 .checkbox-grid li {
-  display: block;
-  float: left;
-  width: 25%;
-}
-
-.col-2 .checkbox-grid li label {
-  display: block;
-  overflow: hidden;
-  float: left;
-  cursor: pointer;
-}
-
-.col-1 {
-  float: left;
-  width: 25%;
-  margin-top: 20px;
-  text-align: start;
-}
-
-.col-2 {
-  float: left;
-  width: 75%;
-  margin-top: 6px;
-}
-
-button {
-  background-color: var(--primary);
-  color: white;
-  border: 0;
-  padding: 10px;
-  margin-top: 20px;
-  border-radius: 18px;
-  width: 150px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 /* Login and Register */
 .login-container {
   width: 100%;
@@ -461,13 +364,22 @@ button {
 
 .username {
   display: inline-block;
-  width: 400px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0;
 }
 
-.username-input,
+.username-input {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  margin-left: 20px;
+}
+
 .email-input,
 .password-input {
   box-sizing: border-box;
