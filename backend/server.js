@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require('path');
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -13,6 +14,11 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use('/', function(req,res){
+  res.sendFile(path.join(__dirname+'/index.html'));
+  //__dirname : It will resolve to your project folder.
+});
 
 //routes
 app.use("/api/problems", problemRoutes);
